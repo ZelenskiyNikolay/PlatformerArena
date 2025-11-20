@@ -29,7 +29,7 @@ namespace FX
         {
             _effectAnimation = new AnimationController();
             _dest = new Rectangle(RectangleObject.X - 50, RectangleObject.Y, 150, 150);
-            _size = new Point(200, 120);
+            _size = new Point(150, 100);
             _color.A = 200;
             LoadContent(Content);
         }
@@ -52,12 +52,12 @@ namespace FX
         {
             if (!IsActive) return;
 
-            _color.A -= (byte)(100*dt);
+            _color.A -= (byte)(150*dt);
 
             _dest = rectangleObject;
 
             _dest.X -= (_size.X - _dest.Width) / 2;
-            _dest.Y -= (_size.Y - _dest.Height) / 2;
+            _dest.Y -=(int)(_size.Y*0.8f - _dest.Height);
             _dest.Width = _size.X;
             _dest.Height = _size.Y;
 
