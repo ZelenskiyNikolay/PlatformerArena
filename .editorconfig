@@ -1,0 +1,88 @@
+# ============================================================
+#     MonoGame / .NET C# STYLE GUIDE (.editorconfig)
+# ============================================================
+
+[*.cs]
+
+########################################
+# 1️⃣ PRIVATE FIELDS (_camelCase)
+########################################
+dotnet_naming_rule.private_fields_should_be_camel_with_underscore.symbols = private_fields
+dotnet_naming_rule.private_fields_should_be_camel_with_underscore.style = camel_with_underscore
+dotnet_naming_rule.private_fields_should_be_camel_with_underscore.severity = suggestion
+
+dotnet_naming_symbols.private_fields.applicable_kinds = field
+dotnet_naming_symbols.private_fields.applicable_accessibilities = private
+dotnet_naming_symbols.private_fields.required_modifiers = 
+
+dotnet_naming_style.camel_with_underscore.capitalization = camel_case
+dotnet_naming_style.camel_with_underscore.required_prefix = _
+
+
+########################################
+# 2️⃣ PUBLIC MEMBERS (PascalCase)
+########################################
+dotnet_naming_rule.public_members_should_be_pascal_case.symbols = public_members
+dotnet_naming_rule.public_members_should_be_pascal_case.style = pascal_case
+dotnet_naming_rule.public_members_should_be_pascal_case.severity = suggestion
+
+dotnet_naming_symbols.public_members.applicable_accessibilities = public
+dotnet_naming_symbols.public_members.applicable_kinds = property, method, field, event
+
+dotnet_naming_style.pascal_case.capitalization = pascal_case
+
+
+########################################
+# 3️⃣ CONSTANTS (ALL_CAPS)
+########################################
+dotnet_naming_rule.constants_should_be_upper_case.symbols = constants
+dotnet_naming_rule.constants_should_be_upper_case.style = upper_case
+dotnet_naming_rule.constants_should_be_upper_case.severity = suggestion
+
+dotnet_naming_symbols.constants.applicable_kinds = field
+dotnet_naming_symbols.constants.required_modifiers = const
+dotnet_naming_symbols.constants.applicable_accessibilities = public, internal, protected, private
+
+dotnet_naming_style.upper_case.capitalization = all_upper
+dotnet_naming_style.upper_case.word_separator = _
+
+
+########################################
+# 4️⃣ ENUM MEMBERS (PascalCase)
+########################################
+dotnet_naming_rule.enum_members_should_be_pascal_case.symbols = enum_members
+dotnet_naming_rule.enum_members_should_be_pascal_case.style = pascal_case
+dotnet_naming_rule.enum_members_should_be_pascal_case.severity = suggestion
+
+dotnet_naming_symbols.enum_members.applicable_kinds = enum_member
+dotnet_naming_symbols.enum_members.applicable_accessibilities = *
+
+# (использует уже объявленный стиль pascal_case)
+
+
+########################################
+# 5️⃣ INTERFACES (I + PascalCase)
+########################################
+dotnet_naming_rule.interfaces_should_start_with_i.symbols = interfaces
+dotnet_naming_rule.interfaces_should_start_with_i.style = interface_prefix_i
+dotnet_naming_rule.interfaces_should_start_with_i.severity = suggestion
+
+dotnet_naming_symbols.interfaces.applicable_kinds = interface
+dotnet_naming_symbols.interfaces.applicable_accessibilities = *
+
+dotnet_naming_style.interface_prefix_i.capitalization = pascal_case
+dotnet_naming_style.interface_prefix_i.required_prefix = I
+
+
+########################################
+# 6️⃣ STATIC FIELDS (s_camelCase)
+########################################
+dotnet_naming_rule.static_fields_should_be_s_camel_case.symbols = static_fields
+dotnet_naming_rule.static_fields_should_be_s_camel_case.style = static_camel
+dotnet_naming_rule.static_fields_should_be_s_camel_case.severity = suggestion
+
+dotnet_naming_symbols.static_fields.applicable_kinds = field
+dotnet_naming_symbols.static_fields.required_modifiers = static
+
+dotnet_naming_style.static_camel.capitalization = camel_case
+dotnet_naming_style.static_camel.required_prefix = s_
