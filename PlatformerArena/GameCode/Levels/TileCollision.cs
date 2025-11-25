@@ -39,6 +39,10 @@ namespace Levels
         {
             slime.Rect = UpdateCollision(slime.Rect, ref slime.Velocity, ref slime.OnGround);
         }
+        public void UpdateCollision(Knight knight)
+        {
+            knight.Rect = UpdateCollision(knight.Rect, ref knight.Velocity, ref knight.OnGround);
+        }
 
         /// <summary>
         /// Метод обработки коллиизиий

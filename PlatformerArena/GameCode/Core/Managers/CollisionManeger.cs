@@ -34,6 +34,10 @@ namespace Core
         {
             TileCollision.UpdateCollision(slime);
         }
+        public void UpdateCollision(Knight knight)
+        {
+            TileCollision.UpdateCollision(knight);
+        }
         public void UpdateCollision(Rectangle player, Coin coin)
         {
             if (!coin.IsActive)
@@ -54,6 +58,39 @@ namespace Core
                 UpdateCollision(player,(Enemy)enemy);
             else if(enemy is Slime)
                 UpdateCollision(player,(Slime)enemy);
+            else if(enemy is Knight)
+                UpdateCollision(player,(Knight)enemy);
+        }
+        public void UpdateCollision(Player player, Knight enemy)
+        {
+            if (player.Collider.ColliderRectangle.Intersects(enemy.Rect))
+            {
+                bool hitFromAbove =
+        player.Velocity.Y > 0 &&                          // Игрок падал
+        player.Collider.ColliderRectangle.Bottom - player.Velocity.Y <= enemy.Rect.Top + 5;  // До столкновения был выше
+
+
+                // Если игрок на земле — это заведомо удар сбоку
+                if (player.IsOnGround)
+                {
+                    player.TakeDamage(enemy.Damage, new Vector2(enemy.Velocity.X * 50, enemy.Velocity.Y * 50));
+                    return;
+                }
+
+                // Проверка сверху
+                if (hitFromAbove)
+                {
+                    // Игрок упал на врага
+                    enemy.TakeDamage(enemy.Health, Vector2.Zero);
+                    player.Velocity.Y = -30f;
+                    EventManager.Instance.Trigger(new ScoreColectEvent(20));//?
+                }
+                else
+                {
+                    // Удар сбоку или снизу
+                    player.TakeDamage(enemy.Damage, enemy.Velocity);
+                }
+            }
         }
         public void UpdateCollision(Player player, Slime enemy)
         {

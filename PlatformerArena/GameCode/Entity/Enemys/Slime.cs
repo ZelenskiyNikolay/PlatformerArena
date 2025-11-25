@@ -74,7 +74,8 @@ namespace Entity
 
             _animation.Play(SlimeAnimation.Idle);
 
-            _effect = new Exploded(new Rectangle(0,0,170,75), content, "Enemy/Slime/Effects/FX_Dying", 10,new Point(170,75));
+            _effect = new Exploded(new Rectangle(0,0,170,75), content,
+                "Enemy/Slime/Effects/FX_Dying", 10,new Point(170,75));
         }
 
         public override void Update(float dt, Rectangle PlayerPosition)
@@ -127,6 +128,7 @@ namespace Entity
             {
                 if (_animation.IsAnimationPlayed)
                 {
+                    _dyeRect.Y = Rect.Y;
                     _effect.StartEffect();
                     State = SlimeState.Dead;
                     Respawn();

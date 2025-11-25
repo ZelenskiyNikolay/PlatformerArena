@@ -19,6 +19,7 @@ namespace Levels
         private TileMap _tileMap;
 
         public TileMap TileMap { get { return _tileMap; } }
+        public int TileSize { get { return _tileMap.TILESIZE; } }
 
         private Camera _camera;
 
@@ -99,6 +100,11 @@ namespace Levels
                     {
                         _enemys.Add(new Slime(Content, new Rectangle(tile.Key.X * _tileMap.TILESIZE, tile.Key.Y * _tileMap.TILESIZE,
                             30, 30), new Rectangle(0, 0, 30, 30)));
+                    }
+                    else if (tile.Value == 244)
+                    {
+                        _enemys.Add(new Knight(Content, new Rectangle(tile.Key.X * _tileMap.TILESIZE, tile.Key.Y * _tileMap.TILESIZE,
+                            30, 30), new Rectangle(0, 0, 30, 30), _tileMap.TILESIZE));
                     }
                 }
             }

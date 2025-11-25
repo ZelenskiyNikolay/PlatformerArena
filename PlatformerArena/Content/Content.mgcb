@@ -87,6 +87,54 @@
 /processorParam:TextureFormat=Color
 /build:Levels/Enemy/Enemy1RUN.png;Levels/Enemy/Enemy1RUN
 
+#begin Levels/Enemy/Knight/Dying.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Levels/Enemy/Knight/Dying.png;Levels/Enemy/Knight/Dying
+
+#begin Levels/Enemy/Knight/Effects/FX_Dying.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Levels/Enemy/Knight/Effects/FX_Dying.png;Levels/Enemy/Knight/Effects/FX_Dying
+
+#begin Levels/Enemy/Knight/Idel.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Levels/Enemy/Knight/Idel.png;Levels/Enemy/Knight/Idel
+
+#begin Levels/Enemy/Knight/Run.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Levels/Enemy/Knight/Run.png;Levels/Enemy/Knight/Run
+
 #begin Levels/Enemy/Slime/Dying.png
 /importer:TextureImporter
 /processor:TextureProcessor

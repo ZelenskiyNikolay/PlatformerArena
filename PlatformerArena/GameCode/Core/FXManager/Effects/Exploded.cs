@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Net.Mail;
 
 
 namespace FX
@@ -16,14 +17,23 @@ namespace FX
         private Point _size;
         private Color _color = Color.Green;
 
+        public Exploded(Rectangle RectangleDest, ContentManager Content, string TextureName, int NumFrames, Point SizeFrame, Color color)
+        {
+            Init(RectangleDest, Content, TextureName, NumFrames, SizeFrame);
+            _color = color;
+        }
         public Exploded(Rectangle RectangleDest, ContentManager Content, string TextureName, int NumFrames,Point SizeFrame)
+        {
+            Init(RectangleDest, Content, TextureName, NumFrames, SizeFrame);
+        }
+        private void Init(Rectangle RectangleDest, ContentManager Content, string TextureName, int NumFrames, Point SizeFrame)
         {
             _effectAnimation = new AnimationController();
             _dest = new Rectangle();// RectangleDest.X - 50, RectangleDest.Y, RectangleDest.Width, RectangleDest.Height);
             //_size = new Point(RectangleDest.Width, RectangleDest.Height);
             _size = new Point(200, 120);
             _color.A = 200;
-            LoadContent(Content, TextureName, NumFrames,SizeFrame);
+            LoadContent(Content, TextureName, NumFrames, SizeFrame);
         }
         public Exploded(Rectangle RectangleObject, ContentManager Content)
         {
