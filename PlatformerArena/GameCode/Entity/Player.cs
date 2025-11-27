@@ -28,8 +28,8 @@ namespace Entity
         private bool IsColliderDraw = false;
 
         // Константы горизонтального движения 
-        private const float MoveAcceleration = 500.0f;
-        private const float MaxMoveSpeed = 800.0f;
+        private const float MoveAcceleration = 400.0f;
+        private const float MaxMoveSpeed = 500.0f;
         private const float GroundDragFactor = 0.48f;
         private const float AirDragFactor = 0.58f;
 
@@ -297,7 +297,7 @@ namespace Entity
                 EventManager.Instance.Trigger(new ShowColliderEvent(IsColliderDraw));
             }
 
-            _isJumping = (input.IsKeyHeldDown(Keys.Space) || input.IsKeyHeldDown(Keys.Up));
+            _isJumping = (input.IsKeyPressed(Keys.Space) || input.IsKeyPressed(Keys.Up));
         }
 
         public void Draw(SpriteBatch spriteBatch)
