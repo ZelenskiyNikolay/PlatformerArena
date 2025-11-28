@@ -81,8 +81,12 @@ namespace Core
                 if (hitFromAbove)
                 {
                     // Игрок упал на врага
-                    enemy.TakeDamage(enemy.Health, Vector2.Zero);
+                    enemy.TakeDamage(player.Damage, Vector2.Zero);
                     player.Velocity.Y = -30f;
+                    if (player.Velocity.X < 0)
+                        player.Velocity.X = -30;
+                    else
+                        player.Velocity.X = 30;
                     EventManager.Instance.Trigger(new ScoreColectEvent(20));//?
                 }
                 else

@@ -106,6 +106,11 @@ namespace Levels
                         _enemys.Add(new Knight(Content, new Rectangle(tile.Key.X * _tileMap.TILESIZE, tile.Key.Y * _tileMap.TILESIZE,
                             30, 30), new Rectangle(0, 0, 30, 30), _tileMap.TILESIZE));
                     }
+                    else if (tile.Value == 245)
+                    {
+                        _enemys.Add(new HeavyKnight(Content, new Rectangle(tile.Key.X * _tileMap.TILESIZE, tile.Key.Y * _tileMap.TILESIZE,
+                            60, 60), new Rectangle(0, 0, 30, 30), _tileMap.TILESIZE));
+                    }
                 }
             }
             CollisionManeger.Instance.InitColision(_tileMap.Collisions);
