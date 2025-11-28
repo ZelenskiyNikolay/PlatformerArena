@@ -10,7 +10,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static Entity.Slime;
 
 
 namespace Entity
@@ -52,7 +51,7 @@ namespace Entity
         private bool _showColiider = false;
         private bool _rotate = false;
         public int Damage { get; set; } = 5;
-        public int Health { get; set; } = 30;
+        public int Health { get; set; } = 40;
 
         private const float AggroDistance = 5 * 50; // 5 тайлов по 50px
 
@@ -65,9 +64,9 @@ namespace Entity
         private Rectangle _tempRect2 = new();
         public static class KnightAnimation
         {
-            //public static readonly AnimationId Idle = new("Idle");
+            public static readonly AnimationId Idle = new("Idle");
             public static readonly AnimationId Run = new("Run");
-            //public static readonly AnimationId Dying = new("Dying");
+            public static readonly AnimationId Dying = new("Dying");
         }
         private AnimationController _animation;
         public Knight(ContentManager Content, Rectangle rect, Rectangle srect, int TileSize)
@@ -97,7 +96,7 @@ namespace Entity
 
             // Idle
             var idle = content.Load<Texture2D>("Enemy/Knight/Idel");
-            _animation.Add(SlimeAnimation.Idle, new Animation.Animation(idle, 0, 4, 15, 20));
+            _animation.Add(KnightAnimation.Idle, new Animation.Animation(idle, 0, 4, 15, 20));
 
             // Run
             var run = content.Load<Texture2D>("Enemy/Knight/Run");
@@ -105,7 +104,7 @@ namespace Entity
 
             // Dying
             var dying = content.Load<Texture2D>("Enemy/Knight/Dying");
-            _animation.Add(SlimeAnimation.Dying, new Animation.Animation(dying, false, 0.2f));
+            _animation.Add(KnightAnimation.Dying, new Animation.Animation(dying, false, 0.2f));
 
             _animation.Play(KnightAnimation.Run);
 
@@ -183,7 +182,7 @@ namespace Entity
             if (_dx < AggroDistance && _dy < AggroDistance * 0.5f)
             {
                 State = KnightState.Chase;
-                _animation.Play(SlimeAnimation.Run);
+                _animation.Play(KnightAnimation.Run);
             }
 
             if (IsGoingLeft)
@@ -192,7 +191,7 @@ namespace Entity
                 if (Rect.Center.X <= PatrolLeftX)
                 {
                     State = KnightState.Idle;
-                    _animation.Play(SlimeAnimation.Idle);
+                    _animation.Play(KnightAnimation.Idle);
                     _randTimerIdel = Random.Shared.Next(3, 15);
                     IsGoingLeft = false; // Пошёл направо
                 }
@@ -209,7 +208,7 @@ namespace Entity
                 if (Rect.Center.X >= PatrolRightX)
                 {
                     State = KnightState.Idle;
-                    _animation.Play(SlimeAnimation.Idle);
+                    _animation.Play(KnightAnimation.Idle);
                     _randTimerIdel = Random.Shared.Next(3, 15);
                     IsGoingLeft = true;
                 }
@@ -361,7 +360,7 @@ namespace Entity
             Active = false;
             ActiveCollider = true;
 
-            _animation.Play(SlimeAnimation.Run);
+            _animation.Play(KnightAnimation.Run);
             State = KnightState.Idle;
         }
         private void UpdateChase(float dt, Rectangle PlayerPosition)
@@ -396,32 +395,36 @@ namespace Entity
             if (_randTimerIdel <= 0)
             {
                 State = KnightState.Patrol;
-                _animation.Play(SlimeAnimation.Run);
+                _animation.Play(KnightAnimation.Run);
             }
             Velocity.X = 0;
 
             if (_dx < AggroDistance && _dy < AggroDistance * 0.5f)
             {
                 State = KnightState.Chase;
-                _animation.Play(SlimeAnimation.Run);
+                _animation.Play(KnightAnimation.Run);
             }
         }
         public void TakeDamage(int damage, Vector2 knockback)
         {
             //if (_damageCooldown > 0) return; // ещё не прошло время защиты
-
+           
             Health -= damage;
-            if (Health < 0) Health = 0;
+           
+            if (Health <= 0)
+            {
+                Health = 0;
 
-            State = KnightState.Dying;
+                State = KnightState.Dying;
 
-            ActiveCollider = false;
+                ActiveCollider = false;
 
-            _animation.Play(SlimeAnimation.Dying);
+                _animation.Play(KnightAnimation.Dying);
 
-            _dyeRect = Rect;
+                _dyeRect = Rect;
 
-            Rect.Width += Rect.Width/3;
+                Rect.Width += Rect.Width / 3;
+            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)
