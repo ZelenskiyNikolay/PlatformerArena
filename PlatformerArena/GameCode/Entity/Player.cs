@@ -102,6 +102,8 @@ namespace Entity
             EventManager.Instance.Subscribe<CoinColectEvent>(CoinColect);
             EventManager.Instance.Subscribe<ScoreColectEvent>(ScoreColect);
 
+            EventManager.Instance.Trigger(new UpdateHealthEvent(Health));
+
             LoadContent(Contetnt);
         }
         public void ScoreColect(ScoreColectEvent e)
@@ -135,6 +137,8 @@ namespace Entity
             if (_damageCooldown > 0) return; // ещё не прошло время защиты
 
             Health -= amount;
+
+            EventManager.Instance.Trigger(new UpdateHealthEvent(Health));
 
             if (knockbackDirection.X > 10) { knockbackDirection.X = 30f; knockbackDirection.Y = -20f; }
             else if (knockbackDirection.X < -10) { knockbackDirection.X = -30f; knockbackDirection.Y = -20f; }

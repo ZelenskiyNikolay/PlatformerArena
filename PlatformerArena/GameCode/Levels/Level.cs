@@ -116,6 +116,8 @@ namespace Levels
             CollisionManeger.Instance.InitColision(_tileMap.Collisions);
 
             LevelUI.Instance.SetScore(playerData.Score);
+            temp = Content.Load<Texture2D>("UI/Heart");
+            LevelUI.Instance._heart = temp;
 
             LevelManager.Instance.Camera = new Camera(GameManager.Instance.Graphics.PreferredBackBufferWidth,
                 GameManager.Instance.Graphics.PreferredBackBufferHeight,

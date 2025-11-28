@@ -255,6 +255,18 @@
 /processorParam:TextureFormat=Color
 /build:Levels/Player/Player.png
 
+#begin Levels/UI/Heart.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Levels/UI/Heart.png;Levels/UI/Heart
+
 #begin Levels/world_tileset.png
 /importer:TextureImporter
 /processor:TextureProcessor

@@ -37,6 +37,11 @@ namespace Core
         public readonly int Score;
         public SavePlayerDataEvent(int score) => Score = score;
     }
+    public class UpdateHealthEvent
+    {
+        public readonly int Health;
+        public UpdateHealthEvent(int health) => Health = health;
+    }
     public class ShowColliderEvent
     {
         public readonly bool ShowCollider;
