@@ -51,7 +51,7 @@ namespace Entity
         private bool _showColiider = false;
         private bool _rotate = false;
         public int Damage { get; set; } = 5;
-        public int Health { get; set; } = 40;
+        public int Health { get; set; } = 5;
 
         private const float AggroDistance = 5 * 50; // 5 тайлов по 50px
 

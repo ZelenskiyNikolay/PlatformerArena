@@ -54,6 +54,8 @@ namespace Entity
         private EffectManager _effect;
 
         public int Health { get; private set; } = 20;
+        public int Damage { get; set; } = 5;
+
         private float _damageCooldown; // таймер неуязвимости
 
         /// <summary>
