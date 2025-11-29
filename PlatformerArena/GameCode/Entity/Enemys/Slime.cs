@@ -34,6 +34,7 @@ namespace Entity
         private const float AggroDistance = 5 * 50; // 5 тайлов по 50px
 
         private float _dx, _dy;
+        private float _player_dx;
 
         private Exploded _effect;
         private Rectangle _dyeRect;
@@ -168,6 +169,13 @@ namespace Entity
                     Velocity.X = -1f;
                 if (PlayerPosition.X >= Rect.X)
                     Velocity.X = 1f;
+
+                _player_dx = PlayerPosition.X - Rect.X;
+
+                if (Math.Abs(_player_dx) > 8f)
+                    Velocity.X = Math.Sign(_player_dx);
+                else
+                    Velocity.X = 0f;
             }
         }
         private void UpdateIdle(float dt, Rectangle PlayerPosition)
