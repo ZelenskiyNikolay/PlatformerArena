@@ -48,6 +48,7 @@ namespace Core
         public ShowColliderEvent(bool shoCollider) => ShowCollider = shoCollider;
     }
     public class LandingEffectEvent { }
+    public class DeathFadeEffectEvent { }
 }
 
 

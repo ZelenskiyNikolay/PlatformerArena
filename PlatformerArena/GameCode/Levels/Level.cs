@@ -142,6 +142,7 @@ namespace Levels
         public void Updete(GameTime gameTime)
         {
             float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            LevelUI.Instance.Update(dt);
             if (_startBaner)
             {
                 _startBaner = _baner.Update(dt);

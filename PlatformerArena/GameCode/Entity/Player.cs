@@ -81,6 +81,21 @@ namespace Entity
         public bool IsJumping = false;
         private bool _isFall = false;
 
+
+        // Поле класса Player
+        private float _idleTime;
+        private float _idleOffsetY;
+        private const float _idleAmplitude = 10.0f;   // амплитуда покачивания
+        private const float _idleSpeed = 5.0f;       // скорость дыхания
+
+        enum PlayerState
+        {
+            Normal,
+            Dying,
+            Dead
+        }
+        private PlayerState _state;
+
         public Player(PlayerData playerData, Vector2 spavnPosition, ContentManager Contetnt, Texture2D texture2D = null)
         {
             _playerData = playerData;
@@ -103,6 +118,8 @@ namespace Entity
             EventManager.Instance.Subscribe<ScoreColectEvent>(ScoreColect);
 
             EventManager.Instance.Trigger(new UpdateHealthEvent(Health));
+
+            _state = PlayerState.Normal;
 
             LoadContent(Contetnt);
         }
@@ -150,22 +167,43 @@ namespace Entity
             // проверка здоровья
             if (Health <= 0)
             {
-                Unload();
-                LevelManager.Instance.Dispose();
-                LevelManager.Instance.PlayerDataGlobal.Score = _playerData.Score;
-                EventManager.Instance.Trigger(new ChangeSceneEvent("GameOver"));
+                EventManager.Instance.Trigger(new DeathFadeEffectEvent());
+                _state = PlayerState.Dying;
             }
             _damageCooldown = 0.4f;
         }
-
-        // Поле класса Player
-        private float _idleTime;
-        private float _idleOffsetY;
-        private const float _idleAmplitude = 10.0f;   // амплитуда покачивания
-        private const float _idleSpeed = 5.0f;       // скорость дыхания
         public void Update(GameTime gameTime)
         {
             float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            switch (_state)
+            {
+                case PlayerState.Normal:
+                    NormalUpdete(gameTime, dt);
+                    break;
+                case PlayerState.Dying:
+                    UpdateDying(dt);
+                    break;
+                case PlayerState.Dead:
+                    Unload();
+                    LevelManager.Instance.Dispose();
+                    LevelManager.Instance.PlayerDataGlobal.Score = _playerData.Score;
+                    EventManager.Instance.Trigger(new ChangeSceneEvent("GameOver"));
+                    break;
+            }
+
+        }
+        private void UpdateDying(float dt)
+        {
+            if (LevelUI.Instance.DeathEffectOver)
+            {
+                _state=PlayerState.Dead;
+            }
+            EventManager.Instance.Trigger(new LandingEffectEvent());
+        }
+        private void NormalUpdete(GameTime gameTime,float dt)
+        {
+
             _position.X = _dest.X;
             _position.Y = _dest.Y;
 
@@ -202,8 +240,8 @@ namespace Entity
 
             ApplyPhysics(dt);
 
-            
-            if(IsJumping && IsOnGround || IsOnGround && _isFall)
+
+            if (IsJumping && IsOnGround || IsOnGround && _isFall)
             {
                 _isFall = false;
                 IsJumping = false;
@@ -215,7 +253,7 @@ namespace Entity
             if (IsOnGround)
                 _effect.Update(gameTime, _visualization, new Vector2(_movement, 0));
             else
-                _effect.Update(gameTime,Rectangle.Empty,Vector2.Zero);
+                _effect.Update(gameTime, Rectangle.Empty, Vector2.Zero);
 
             _movement = 0.0f;
             _isJumping = false;
@@ -235,7 +273,7 @@ namespace Entity
             // движене и гравтация
             Velocity.X += _movement * MoveAcceleration * dt;
             Velocity.Y = MathHelper.Clamp(Velocity.Y + GravityAcceleration * dt, -MaxFallSpeed, MaxFallSpeed);
-            
+
             if (Velocity.Y > 30)
                 _isFall = true;
 
@@ -304,6 +342,7 @@ namespace Entity
             }
 
             _isJumping = (input.IsKeyPressed(Keys.Space) || input.IsKeyPressed(Keys.Up));
+
         }
 
         public void Draw(SpriteBatch spriteBatch)
