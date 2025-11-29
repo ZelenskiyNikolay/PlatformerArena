@@ -12,10 +12,9 @@ namespace Entity
 {
     internal class HeavyKnight : Knight
     {
-        public HeavyKnight(ContentManager Content, Rectangle rect, Rectangle srect, int TileSize) : base(Content, rect, srect, TileSize)
-        {
-            Health = 20;
-        }
+        protected override int DefaultHealth => 20;
+        public HeavyKnight(ContentManager Content, Rectangle rect, Rectangle srect, int TileSize) : base(Content, rect, srect, TileSize , 20)
+        {}
         public override void Update(float dt, Rectangle PlayerPosition)
         {
             base.Update(dt, PlayerPosition);

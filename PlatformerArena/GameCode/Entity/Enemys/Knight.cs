@@ -55,6 +55,8 @@ namespace Entity
 
         private const float AggroDistance = 5 * 50; // 5 тайлов по 50px
 
+        protected virtual int DefaultHealth => 10; //Поле для наследников
+
         private float _dx, _dy;
         private float _player_dx;
 
@@ -70,9 +72,10 @@ namespace Entity
             public static readonly AnimationId Dying = new("Dying");
         }
         private AnimationController _animation;
-        public Knight(ContentManager Content, Rectangle rect, Rectangle srect, int TileSize)
+        public Knight(ContentManager Content, Rectangle rect, Rectangle srect, int TileSize, int health = 10)
             : base(Content.Load<Texture2D>("Enemy/Enemy1"), rect, srect)
         {
+            Health = health;
             OnGround = false;
             EventManager.Instance.Subscribe<ShowColliderEvent>(ShowCollider);
 
@@ -360,6 +363,8 @@ namespace Entity
             _respTimer = Random.Shared.Next(5, 30);
             Active = false;
             ActiveCollider = true;
+
+            Health = DefaultHealth;
 
             _animation.Play(KnightAnimation.Run);
             State = KnightState.Idle;
