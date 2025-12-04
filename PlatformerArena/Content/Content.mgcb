@@ -51,6 +51,54 @@
 /processorParam:TextureFormat=Color
 /build:Levels/collider.png
 
+#begin Levels/Enemy/Boss1/Orc-Attack-Sheet.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Levels/Enemy/Boss1/Orc-Attack-Sheet.png;Levels/Enemy/Boss1/Orc-Attack-Sheet
+
+#begin Levels/Enemy/Boss1/Orc-Death-Sheet.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Levels/Enemy/Boss1/Orc-Death-Sheet.png;Levels/Enemy/Boss1/Orc-Death-Sheet
+
+#begin Levels/Enemy/Boss1/Orc-Idle-Sheet.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Levels/Enemy/Boss1/Orc-Idle-Sheet.png;Levels/Enemy/Boss1/Orc-Idle-Sheet
+
+#begin Levels/Enemy/Boss1/Orc-Walk-Sheet.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Levels/Enemy/Boss1/Orc-Walk-Sheet.png;Levels/Enemy/Boss1/Orc-Walk-Sheet
+
 #begin Levels/Enemy/Enemy1.png
 /importer:TextureImporter
 /processor:TextureProcessor

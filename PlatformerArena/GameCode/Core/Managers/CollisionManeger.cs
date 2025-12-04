@@ -38,6 +38,10 @@ namespace Core
         {
             TileCollision.UpdateCollision(knight);
         }
+        public void UpdateCollision(Boss1 boss)
+        {
+            TileCollision.UpdateCollision(boss);
+        }
         public void UpdateCollision(Rectangle player, Coin coin)
         {
             if (!coin.IsActive)
@@ -60,6 +64,44 @@ namespace Core
                 UpdateCollision(player,(Slime)enemy);
             else if(enemy is Knight)
                 UpdateCollision(player,(Knight)enemy);
+            else if(enemy is Boss1)
+                UpdateCollision(player,(Boss1)enemy);
+        }
+
+        public void UpdateCollision(Player player, Boss1 enemy)
+        {
+            if (player.Collider.ColliderRectangle.Intersects(enemy.Rect))
+            {
+                bool hitFromAbove =
+        player.Velocity.Y > 0 &&                          // Игрок падал
+        player.Collider.ColliderRectangle.Bottom - player.Velocity.Y <= enemy.Rect.Top + 5;  // До столкновения был выше
+
+
+                // Если игрок на земле — это заведомо удар сбоку
+                if (player.IsOnGround)
+                {
+                    player.TakeDamage(enemy.Damage, new Vector2(enemy.Velocity.X * 50, enemy.Velocity.Y * 50));
+                    return;
+                }
+
+                // Проверка сверху
+                if (hitFromAbove)
+                {
+                    // Игрок упал на врага
+                    enemy.TakeDamage(player.Damage, Vector2.Zero);
+                    player.Velocity.Y = -30f;
+                    if (player.Velocity.X < 0)
+                        player.Velocity.X = -30;
+                    else
+                        player.Velocity.X = 30;
+                    EventManager.Instance.Trigger(new ScoreColectEvent(20));//?
+                }
+                else
+                {
+                    // Удар сбоку или снизу
+                    player.TakeDamage(enemy.Damage, enemy.Velocity);
+                }
+            }
         }
         public void UpdateCollision(Player player, Knight enemy)
         {

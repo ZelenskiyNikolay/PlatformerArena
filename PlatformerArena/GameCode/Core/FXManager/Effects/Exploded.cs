@@ -31,7 +31,7 @@ namespace FX
             _effectAnimation = new AnimationController();
             _dest = new Rectangle();// RectangleDest.X - 50, RectangleDest.Y, RectangleDest.Width, RectangleDest.Height);
             //_size = new Point(RectangleDest.Width, RectangleDest.Height);
-            _size = new Point(200, 120);
+            _size = new Point(RectangleDest.Width, RectangleDest.Height);
             _color.A = 200;
             LoadContent(Content, TextureName, NumFrames, SizeFrame);
         }

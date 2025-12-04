@@ -43,6 +43,10 @@ namespace Levels
         {
             knight.Rect = UpdateCollision(knight.Rect, ref knight.Velocity, ref knight.OnGround);
         }
+        public void UpdateCollision(Boss1 boss)
+        {
+            boss.Rect = UpdateCollision(boss.Rect, ref boss.Velocity, ref boss.OnGround);
+        }
 
         /// <summary>
         /// Метод обработки коллиизиий
