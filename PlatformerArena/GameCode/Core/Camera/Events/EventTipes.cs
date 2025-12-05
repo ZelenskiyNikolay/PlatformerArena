@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,6 +50,12 @@ namespace Core
     }
     public class LandingEffectEvent { }
     public class DeathFadeEffectEvent { }
+    public class TakeDamagePlayerEvent
+    {
+        public readonly int Damage;
+        public readonly Vector2 Vector;
+        public TakeDamagePlayerEvent(int damage, Vector2 vector){Damage = damage; Vector = vector; }
+    }
 }
 
 

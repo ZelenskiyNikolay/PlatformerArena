@@ -116,6 +116,7 @@ namespace Entity
 
             EventManager.Instance.Subscribe<CoinColectEvent>(CoinColect);
             EventManager.Instance.Subscribe<ScoreColectEvent>(ScoreColect);
+            EventManager.Instance.Subscribe<TakeDamagePlayerEvent>(TakeDamage);
 
             EventManager.Instance.Trigger(new UpdateHealthEvent(Health));
 
@@ -123,6 +124,10 @@ namespace Entity
 
             LoadContent(Contetnt);
         }
+        public void TakeDamage(TakeDamagePlayerEvent e) { TakeDamage(e.Damage, e.Vector);
+            System.Diagnostics.Debug.WriteLine("Урон " + e.Damage);
+        }
+
         public void ScoreColect(ScoreColectEvent e)
         {
             _playerData.Score += e.Points;
@@ -170,7 +175,7 @@ namespace Entity
                 EventManager.Instance.Trigger(new DeathFadeEffectEvent());
                 _state = PlayerState.Dying;
             }
-            _damageCooldown = 0.4f;
+            _damageCooldown = 1f;
         }
         public void Update(GameTime gameTime)
         {
@@ -197,11 +202,11 @@ namespace Entity
         {
             if (LevelUI.Instance.DeathEffectOver)
             {
-                _state=PlayerState.Dead;
+                _state = PlayerState.Dead;
             }
             EventManager.Instance.Trigger(new LandingEffectEvent());
         }
-        private void NormalUpdete(GameTime gameTime,float dt)
+        private void NormalUpdete(GameTime gameTime, float dt)
         {
 
             _position.X = _dest.X;
@@ -363,6 +368,7 @@ namespace Entity
         {
             EventManager.Instance.Unsubscribe<CoinColectEvent>(CoinColect);
             EventManager.Instance.Unsubscribe<ScoreColectEvent>(ScoreColect);
+            EventManager.Instance.Unsubscribe<TakeDamagePlayerEvent>(TakeDamage);
         }
     }
 }

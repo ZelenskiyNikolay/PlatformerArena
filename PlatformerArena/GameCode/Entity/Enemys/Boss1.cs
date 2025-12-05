@@ -6,11 +6,10 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
-using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
-using static Entity.Knight;
 
 namespace Entity
 {
@@ -49,6 +48,9 @@ namespace Entity
         public bool IsGoingLeft { get; private set; }
         public bool IsAttack { get; private set; } = false;
 
+        private float _attackCooldown = 3f;  // таймер кулдауна
+        private const float _attackDelay = 3f;   // задержка между атаками (регулируешь)
+
         private bool _showColiider = false;
         private bool _rotate = false;
         public int Damage { get; set; } = 5;
@@ -64,10 +66,16 @@ namespace Entity
         private float _player_dx;
 
         private Exploded _effect;
+
         private Rectangle _dyeRect;
 
         private Rectangle _tempRect = new();
         private Rectangle _tempRect2 = new();
+
+        private Rectangle _visionRect = new();
+        private const int AttackFrame = 7;
+
+        private bool IsHitFrame => IsAttack && _animation.GetCurrFrame == AttackFrame;
         public static class Boss1Animation
         {
             public static readonly AnimationId Idel = new("Idel");
@@ -107,12 +115,13 @@ namespace Entity
             _animation.Add(Boss1Animation.Dying, new Animation.Animation(dying, 0, 10, 30, 18, false, 0.2f));
 
             var attack = content.Load<Texture2D>("Enemy/Boss1/Orc-Attack-Sheet");
-            _animation.Add(Boss1Animation.Attack, new Animation.Animation(attack, 0, 9, 40, 33, false, 0.2f));
+            _animation.Add(Boss1Animation.Attack, new Animation.Animation(attack, 0, 9, 40, 33, false, 0.05f));
 
             _animation.Play(Boss1Animation.Run);
 
             _effect = new Exploded(new Rectangle(0, 0, 600, 300), content,
-                "Enemy/Knight/Effects/FX_Dying", 11, new Point(64, 64), Color.White);
+                "Enemy/Boss1/Effects/FX_Dying", 11, new Point(64, 64), Color.White);
+
         }
 
         public override void Update(float dt, Rectangle PlayerPosition)
@@ -155,8 +164,9 @@ namespace Entity
 
             if (State == Boss1State.Dying)
                 Velocity.X = 0;
-            if(!IsAttack)
-            CollisionManeger.Instance.UpdateCollision(this);
+
+            if (!IsAttack)
+                CollisionManeger.Instance.UpdateCollision(this);
 
             _animation.Update(dt);
 
@@ -164,6 +174,9 @@ namespace Entity
         }
         private void UpdateStage2(float dt, Rectangle PlayerPosition)
         {
+            if (_attackCooldown > 0)
+                _attackCooldown -= dt;
+
             if (_isJumping && OnGround)
             {
                 _isJumping = false;
@@ -174,10 +187,9 @@ namespace Entity
 
             if (_dx > AggroDistance * 2 || _dy > AggroDistance)
             {
-                State = Boss1State.Stage2;
                 Velocity.X = 0;
-                _animation.Play(Boss1Animation.Attack);
-
+                _animation.Play(Boss1Animation.Run);
+                IsAttack = false;
             }
             if (OnGround)
             {
@@ -195,32 +207,40 @@ namespace Entity
             }
             FindPath();
 
-            if (!IsAttack)
+            if (!IsAttack && _attackCooldown <= 0)
                 if (_dx < Rect.Width * 2 || _dy < Rect.Height * 2)
                 {
                     IsAttack = true;
 
-                    _dyeRect = Rect;
+                    _visionRect = Rect;
 
-                    Rect.Y -= Rect.Height;
-                    Rect.Width = Rect.Width * 2;
-                    Rect.Height = Rect.Height * 2;
+                    _visionRect.Y -= Rect.Height;
+                    _visionRect.Width = Rect.Width * 2;
+                    _visionRect.Height = Rect.Height * 2;
 
                     Velocity.X = 0;
                     _animation.Play(Boss1Animation.Attack);
+                    _attackCooldown = _attackDelay;
                 }
 
             if (IsAttack)
             {
-                if (_animation.IsAnimationPlayed)
+                if (IsHitFrame)
                 {
-                    Rect = _dyeRect;
-                    //_effect.StartEffect();
-                    //State = Boss1State.Dead;
-                    IsAttack = false;
-                    _animation.Play(Boss1Animation.Run);
+                    if (_visionRect.Intersects(PlayerPosition))
+                    {
+                        EventManager.Instance.Trigger(new TakeDamagePlayerEvent(5,
+                            new Vector2(0, -20)));
+                    }
                     EventManager.Instance.Trigger(new LandingEffectEvent());
                 }
+                if (_animation.IsAnimationPlayed)
+                {
+
+                    IsAttack = false;
+                    _animation.Play(Boss1Animation.Run);
+                }
+                Velocity.X = 0;
             }
         }
 
@@ -424,7 +444,10 @@ namespace Entity
         {
             if (Active)
             {
-                _animation.Draw(spriteBatch, Rect, Color.White, _rotate);
+                if (IsAttack)
+                    _animation.Draw(spriteBatch, _visionRect, Color.White, _rotate);
+                else
+                    _animation.Draw(spriteBatch, Rect, Color.White, _rotate);
 
                 if (_showColiider)
                     spriteBatch.Draw(CollisionManeger.Instance.ColliderTexture, Rect, Color.White);

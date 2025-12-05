@@ -19,6 +19,7 @@ namespace Animation
         private int _frame;
 
         public bool IsAnimationPlayed { get { return _currentAnimation.AnimationPlayed; } }
+        public int GetCurrFrame { get { return _frame; } }
         public void Add(AnimationId id, Animation anim)
         {
             _animations[id] = anim;
