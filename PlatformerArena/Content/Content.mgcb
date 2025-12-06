@@ -51,6 +51,30 @@
 /processorParam:TextureFormat=Color
 /build:Levels/collider.png
 
+#begin Levels/Enemy/Boss1/Effects/FireColumn.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Levels/Enemy/Boss1/Effects/FireColumn.png;Levels/Enemy/Boss1/Effects/FireColumn
+
+#begin Levels/Enemy/Boss1/Effects/FX_Dying.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Levels/Enemy/Boss1/Effects/FX_Dying.png;Levels/Enemy/Boss1/Effects/FX_Dying
+
 #begin Levels/Enemy/Boss1/Orc-Attack-Sheet.png
 /importer:TextureImporter
 /processor:TextureProcessor

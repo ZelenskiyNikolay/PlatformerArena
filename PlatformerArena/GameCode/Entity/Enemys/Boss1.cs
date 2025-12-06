@@ -66,6 +66,8 @@ namespace Entity
         private float _player_dx;
 
         private Exploded _effect;
+        private FireColumn _fireColumn;
+        private DamageEffect _damageEffect;
 
         private Rectangle _dyeRect;
 
@@ -121,15 +123,31 @@ namespace Entity
 
             _effect = new Exploded(new Rectangle(0, 0, 600, 300), content,
                 "Enemy/Boss1/Effects/FX_Dying", 11, new Point(64, 64), Color.White);
+            _fireColumn = new FireColumn(new Rectangle(0, 0, 40, 50), content,
+                "Enemy/Boss1/Effects/FireColumn", 14, new Point(20, 50));
 
+            _damageEffect = new DamageEffect(Rect, content);
+            _damageEffect.SetColor = Color.Red;
+            _damageEffect.SetColorAlpha(150);
         }
 
         public override void Update(float dt, Rectangle PlayerPosition)
         {
             _effect.Update(dt, _dyeRect, Vector2.Zero);
+            _fireColumn.Update(dt, Rect, Vector2.Zero);
+            _damageEffect.Update(dt,Rect,Vector2.Zero);
 
             if (!Active)
                 return;
+
+            if (_fireColumn.IsActive)
+            {
+                if (_fireColumn.GetCollider.Intersects(PlayerPosition))
+                {
+                    EventManager.Instance.Trigger(new TakeDamagePlayerEvent(5,
+                            new Vector2(-20 , -20)));
+                }
+            }
 
             _dx = Math.Abs(PlayerPosition.Center.X - Rect.Center.X);
             _dy = Math.Abs(PlayerPosition.Center.Y - Rect.Center.Y);
@@ -221,6 +239,8 @@ namespace Entity
                     Velocity.X = 0;
                     _animation.Play(Boss1Animation.Attack);
                     _attackCooldown = _attackDelay;
+                    if (Math.Abs(_player_dx) < 8f && _dy > _visionRect.Height)
+                        _fireColumn.StartEffect(Rect.Y);
                 }
 
             if (IsAttack)
@@ -393,6 +413,7 @@ namespace Entity
             //if (_damageCooldown > 0) return; // ещё не прошло время защиты
 
             Health -= damage;
+            _damageEffect.StartEffect();
 
             if (Health <= 25)
             {
@@ -442,6 +463,7 @@ namespace Entity
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
+            
             if (Active)
             {
                 if (IsAttack)
@@ -453,6 +475,8 @@ namespace Entity
                     spriteBatch.Draw(CollisionManeger.Instance.ColliderTexture, Rect, Color.White);
             }
             _effect.Draw(spriteBatch);
+            _fireColumn.Draw(spriteBatch);
+            _damageEffect.Draw(spriteBatch);
         }
         public override void Unload()
         {
