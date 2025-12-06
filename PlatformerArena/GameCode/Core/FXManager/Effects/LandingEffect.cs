@@ -14,6 +14,7 @@ namespace FX
         private AnimationId Landing;
         private Rectangle _dest; 
         private Color _color = Color.Gray;
+        public Color SetColor { set { _color = value; } } 
         public LandingEffect(Rectangle RectangleObject, ContentManager Content)
         {
             _effectAnimation = new AnimationController();
@@ -39,6 +40,15 @@ namespace FX
             Landing = new AnimationId("Landing");
             _effectAnimation.Add(Landing, new Animation.Animation(texture,0,10,180,85, false, 0.1f));
             _effectAnimation.Play(Landing); // нужно для обновления структуры....
+        }
+        public void Update(float dt, Rectangle rectangleObject, Vector2 vectorMov)
+        {
+            if (!IsActive) return;
+
+            _dest = new Rectangle(rectangleObject.X - 25, rectangleObject.Y + 25, 100, 50);
+            _effectAnimation.Update(dt);
+            if (_effectAnimation.IsAnimationPlayed)
+                IsActive = false;
         }
         public override void Update(GameTime gameTime, Rectangle rectangleObject, Vector2 vectorMov)
         {
