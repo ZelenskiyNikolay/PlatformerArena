@@ -53,6 +53,9 @@ namespace PlatformerArena
             GameManager.Instance.LoadGame();
             Fps.Font = GameManager.Instance.CoreFont;
             Fps.textPosition.Y = 50;
+
+            SoundManager.Instance.Init(Content);
+            SoundManager.Instance.PlayMusic("Single");
         }
 
         protected override void Update(GameTime gameTime)

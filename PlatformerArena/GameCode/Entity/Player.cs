@@ -251,6 +251,7 @@ namespace Entity
                 _isFall = false;
                 IsJumping = false;
                 EventManager.Instance.Trigger(new LandingEffectEvent());
+                SoundManager.Instance.PlaySFX("2");
             }
             if (_isJumping)
                 IsJumping = true;

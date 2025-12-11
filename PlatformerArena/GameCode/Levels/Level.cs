@@ -131,6 +131,9 @@ namespace Levels
             _baner = new NumberLevelScreen(levelIndex.ToString());
             _startBaner = true;
             LevelManager.Instance.Camera.Update(_player._dest, 0);
+
+            SoundManager.Instance.StopMusic();
+            SoundManager.Instance.PlayMusic("BosFite");
         }
         public void LevelComplete()
         {

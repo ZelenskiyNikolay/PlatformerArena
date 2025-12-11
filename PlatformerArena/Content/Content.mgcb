@@ -387,3 +387,27 @@
 /processorParam:TextureFormat=Color
 /build:Scene/MenuScene/Fon.png;Scene/MenuScene/Fon
 
+#begin Sound/Music/BosFite.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/Music/BosFite.wav;Sound/Music/BosFite
+
+#begin Sound/Music/Single.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/Music/Single.wav;Sound/Music/Single
+
+#begin Sound/SFX/1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/SFX/1.wav;Sound/SFX/1
+
+#begin Sound/SFX/2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sound/SFX/2.wav;Sound/SFX/2
+
